@@ -87,8 +87,7 @@ export const handleSignOut = () => {
             const signedOutUser = {
                 isSignedIn: false,
                 name: '',
-                email: '',
-                img: ''
+                email: ''
             }
             return signedOutUser;
         })

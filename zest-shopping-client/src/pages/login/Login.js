@@ -5,12 +5,23 @@ import { Col, Container } from 'react-bootstrap';
 import SignInForm from '../../components/SignInForm';
 import SignUpForm from '../../components/SignUpForm';
 import './Login.css'
+import { useHistory, useLocation } from 'react-router-dom';
 import { loginWithProvider } from './logInManager';
 import toast from 'react-hot-toast';
+import { useContext } from 'react';
+import { UserContext } from '../../App';
 
 const Login = () => {
+    const { setUser } = useContext(UserContext)
     const [isNewUser, setIsNewUser] = useState(false);
     const google = new firebase.auth.GoogleAuthProvider();
+
+    const history = useHistory();
+    const location = useLocation();
+    const { from } = location.state || { from: { pathname: "/" } };
+    const redirect = () => {
+        history.replace(from);
+    }
 
     const handleGoogleLogin = () => {
         const loading = toast.loading('Please wait...');
@@ -19,7 +30,9 @@ const Login = () => {
             if(res.error){
                 toast.error(res.error)
             } else {
-                toast.success('Login successful!')
+                setUser(res);
+                toast.success('Login successful!');
+                redirect();
             }
             toast.dismiss(loading);
         })
@@ -32,12 +45,12 @@ const Login = () => {
                     isNewUser ?
                     <>
                         <p className="formTitle">Sign Up</p>
-                        <SignUpForm/>
+                        <SignUpForm redirect={redirect} setUser={setUser}/>
                         <p className="userIdentity">Already have an account? <button onClick={() => setIsNewUser(false)}>Sign In</button></p>
                     </>:
                     <>
                         <p className="formTitle">Sign In</p>
-                        <SignInForm/>
+                        <SignInForm redirect={redirect} setUser={setUser}/>
                         <p className="userIdentity">Create a new account? <button onClick={() => setIsNewUser(true)}>Sign Up</button></p>
                     </>
                 }

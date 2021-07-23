@@ -9,28 +9,28 @@ import Orders from './pages/Orders';
 import Login from './pages/login/Login';
 import { getDecodedUser } from './pages/login/logInManager';
 import { Toaster } from 'react-hot-toast';
+import PrivateRoute from './components/PrivateRoute';
 
 
 export const UserContext = createContext();
 function App() {
   const [user, setUser] = useState(getDecodedUser());
 
-  console.log(user);
   return (
     <UserContext.Provider value={{user, setUser}}>
       <Toaster/>
       <Router>
           <NavBar/>
           <Switch>
-            <Route path="/product/:id">
+            <PrivateRoute path="/product/:id">
               <ProductDetails/>
-            </Route>
-            <Route path="/cart">
+            </PrivateRoute>
+            <PrivateRoute path="/cart">
               <Cart/>
-            </Route>
-            <Route path="/orders">
+            </PrivateRoute>
+            <PrivateRoute path="/orders">
               <Orders/>
-            </Route>
+            </PrivateRoute>
             <Route path="/login">
               <Login/>
             </Route>

@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 import { createAccount } from '../pages/login/logInManager';
 import toast from 'react-hot-toast';
 
-const SignUpForm = () => {
+const SignUpForm = ({redirect, setUser}) => {
     const { register, handleSubmit } = useForm();
     
     const onSubmit = ({email, password}) => {
@@ -14,7 +14,9 @@ const SignUpForm = () => {
             if(res.error){
                 toast.error(res.error)
             } else {
+                setUser(res)
                 toast.success('Login successful!')
+                redirect();
             }
             toast.dismiss(loading);
         })
