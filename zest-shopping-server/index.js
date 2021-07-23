@@ -13,6 +13,16 @@ client.connect(err => {
     const cartCollection = client.db(`${process.env.DB_NAME}`).collection('cart');
     const ordersCollection = client.db(`${process.env.DB_NAME}`).collection('orders');
 
+    const handlePost = (route, collection) => {
+        app.post(route, (req, res) => {
+            const data = req.body;
+            collection.insertOne(data)
+            .then(result => res.send(result.insertOne > 0))
+        })
+    }
+    handlePost('/addCart', cartCollection);
+    handlePost('/addOrders', ordersCollection);
+
 })
 
 
