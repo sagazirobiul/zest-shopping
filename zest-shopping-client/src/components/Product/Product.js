@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import './Product.css'
 
 const Product = ({data: {price, id, image}}) => {
@@ -12,7 +13,7 @@ const Product = ({data: {price, id, image}}) => {
                 </div>
                 <div className="py-2 d-flex justify-content-between align-items-center">
                     <h5><span className="text-primary">$</span>{price}</h5>
-                    <Button variant="outline-primary">View Details</Button>
+                    <Button as={Link} to={`/product/${id}`} variant="outline-primary">View Details</Button>
                 </div>
             </div>
         </Col>

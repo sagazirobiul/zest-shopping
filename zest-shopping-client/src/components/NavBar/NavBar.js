@@ -6,7 +6,7 @@ import './NavBar.css'
 const NavBar = () => {
     return (
         <>
-            <Navbar collapseOnSelect expand="lg" bg="light">
+            <Navbar collapseOnSelect expand="lg" className="navBar">
                 <Container>
                     <Navbar.Brand as={Link} to="/" className="fw-bold"><span className="text-primary">ZEST</span> SHOPPING</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
