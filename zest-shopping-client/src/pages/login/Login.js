@@ -1,11 +1,29 @@
 import React, { useState } from 'react';
+import firebase from "firebase/app";
+import "firebase/auth";
 import { Col, Container } from 'react-bootstrap';
 import SignInForm from '../../components/SignInForm';
 import SignUpForm from '../../components/SignUpForm';
 import './Login.css'
+import { loginWithProvider } from './logInManager';
+import toast from 'react-hot-toast';
 
 const Login = () => {
     const [isNewUser, setIsNewUser] = useState(false);
+    const google = new firebase.auth.GoogleAuthProvider();
+
+    const handleGoogleLogin = () => {
+        const loading = toast.loading('Please wait...');
+        loginWithProvider(google)
+        .then(res => {
+            if(res.error){
+                toast.error(res.error)
+            } else {
+                toast.success('Login successful!')
+            }
+            toast.dismiss(loading);
+        })
+    }
 
     return (
         <Container>
@@ -24,7 +42,7 @@ const Login = () => {
                     </>
                 }
                 <p className="or">Or</p>
-                <button className="googleBtn"> Sign In with google</button>
+                <button onClick={handleGoogleLogin} className="googleBtn"> Sign In with google</button>
             </Col>
         </Container>
     );

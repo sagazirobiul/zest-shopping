@@ -1,12 +1,23 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
+import { createAccount } from '../pages/login/logInManager';
+import toast from 'react-hot-toast';
 
 const SignUpForm = () => {
     const { register, handleSubmit } = useForm();
     
-    const onSubmit = data => {
-        console.log(data)
+    const onSubmit = ({email, password}) => {
+        const loading = toast.loading('Please wait...');
+        createAccount(email, password)
+        .then(res => {
+            if(res.error){
+                toast.error(res.error)
+            } else {
+                toast.success('Login successful!')
+            }
+            toast.dismiss(loading);
+        })
     }
 
     return (
