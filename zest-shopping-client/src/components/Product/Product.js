@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Col } from 'react-bootstrap';
 import './Product.css'
 
-const Product = ({data: {title, price, id, image}}) => {
+const Product = ({data: {price, id, image}}) => {
 
     return (
         <Col lg={3} md={4} sm={6} className="my-3">

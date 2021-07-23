@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container, Row } from 'react-bootstrap';
+import { Container, Row, Col, InputGroup, FormControl, Button } from 'react-bootstrap';
 import Product from '../components/Product/Product';
 
 const Home = () => {
@@ -12,8 +12,14 @@ const Home = () => {
     }, [])
     
     return (
-        <section>
+        <section className="py-5">
            <Container>
+                <Col md={4} className="mx-auto">
+                    <InputGroup className="mb-4">
+                        <FormControl aria-describedby="basic-addon2"/>
+                        <Button variant="primary" id="button-addon2">Search</Button>
+                    </InputGroup>
+                </Col>
                <Row>
                     {
                         products.map(data => <Product data={data} key={data.id}/>)
