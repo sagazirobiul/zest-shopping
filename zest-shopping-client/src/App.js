@@ -5,7 +5,7 @@ import NavBar from './components/NavBar/NavBar';
 import ProductDetails from './components/ProductDetails/ProductDetails';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
-import Login from './pages/Login';
+import Login from './pages/login/Login';
 
 function App() {
   return (

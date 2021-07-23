@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React,{ useEffect, useState } from 'react';
+import axios from 'axios';
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import './ProductDetails.css'
@@ -26,6 +26,17 @@ const ProductDetails = () => {
         }
     }
 
+    const handleAddCart = () => {
+        const cartData = {
+            title: title,
+            image: image,
+            description: description,
+            category: category,
+            quantity: quantity,
+            price: price * quantity,
+        }
+    }
+
     return (
         <section className="py-5">
             <Container>
@@ -47,7 +58,7 @@ const ProductDetails = () => {
                         <h2>{title}</h2>
                         <h5 className="my-3">Category: <span className="text-primary">{category}</span></h5>
                         <p>{description}</p>
-                        <Button>Add to cart</Button>
+                        <Button onClick={handleAddCart}>Add to cart</Button>
                     </Col>
                 </Row>
             </Container>
