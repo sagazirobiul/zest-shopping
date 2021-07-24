@@ -25,7 +25,7 @@ const OrderForm = () => {
             totalPrice: totalPrice
         }
 
-        axios.post('http://localhost:8080/addOrders', orderData)
+        axios.post('https://zest-shopping.herokuapp.com/addOrders', orderData)
         .then(res => {
             if(res){
                 toast.dismiss(loading);

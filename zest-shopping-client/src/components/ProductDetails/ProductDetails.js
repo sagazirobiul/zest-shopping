@@ -2,7 +2,6 @@ import React,{ useEffect, useState,useContext } from 'react';
 import axios from 'axios';
 import { Col, Container, Row, Button, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import './ProductDetails.css'
 import toast from 'react-hot-toast';
 import { UserContext } from '../../App';
 
@@ -42,7 +41,7 @@ const ProductDetails = () => {
             email: email
         }
 
-        axios.post('http://localhost:8080/addCart', cartData)
+        axios.post('https://zest-shopping.herokuapp.com/addCart', cartData)
         .then(res => {
             if(res){
                 setIsAdding(false)

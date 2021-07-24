@@ -8,7 +8,7 @@ const Orders = () => {
     const [orders, setOrders] = useState([])
     
     useEffect(() => {
-        axios.get(`http://localhost:8080/orders?email=${email}`)
+        axios.get(`https://zest-shopping.herokuapp.com/orders?email=${email}`)
         .then(res => setOrders(res.data))
     }, [email])
 
@@ -25,7 +25,7 @@ const Orders = () => {
                     {
                         orders.length === 0 ? 
                         <Alert variant="info" className="mt-3 text-center">
-                            You have no orders yet.!
+                            You have no order yet.!
                         </Alert>
                         :
                         <Col md={8} className="mx-auto">

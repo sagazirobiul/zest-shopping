@@ -11,7 +11,7 @@ const Cart = () => {
     const [isUpdate, setIsUpdated] = useState(true)
 
     useEffect(() => {
-        axios.get(`http://localhost:8080/cartProducts?email=${email}`)
+        axios.get(`https://zest-shopping.herokuapp.com/cartProducts?email=${email}`)
         .then(res => setCartProducts(res.data))
     }, [email, setCartProducts, isUpdate])
 
@@ -21,7 +21,7 @@ const Cart = () => {
         setIsUpdated(false)
         const loading = toast.loading('removing...Please wait!')
 
-        axios.delete(`http://localhost:8080/removeCart/${id}`)
+        axios.delete(`https://zest-shopping.herokuapp.com/removeCart/${id}`)
             .then(res => {
                 toast.dismiss(loading)
                 if(res){
