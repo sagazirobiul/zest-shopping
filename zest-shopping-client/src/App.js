@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from './pages/Home';
 import NavBar from './components/NavBar/NavBar';
 import ProductDetails from './components/ProductDetails/ProductDetails';
-import Cart from './pages/Cart';
+import Cart from './pages/Cart/Cart';
 import Orders from './pages/Orders';
 import Login from './pages/login/Login';
 import { getDecodedUser } from './pages/login/logInManager';

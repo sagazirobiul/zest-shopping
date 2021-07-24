@@ -1,0 +1,15 @@
+.cartBox {
+    box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin: 1rem 0;
+}
+
+.cartImg img{
+    height: 100px;
+    border: 1px solid rgba(0,0,0,.125);
+    padding-bottom: 0.5rem;
+    margin-right: 1rem;
+    padding: 0.3rem;
+}

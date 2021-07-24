@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const MongoClient = require('mongodb').MongoClient;
 const port =  process.env.PORT || 8080;
 
 app.use(express.json())
@@ -22,6 +23,16 @@ client.connect(err => {
     }
     handlePost('/addCart', cartCollection);
     handlePost('/addOrders', ordersCollection);
+
+    const handleGet = (route, collection) => {
+        app.get(route, (req, res) => {
+          collection.find({email: req.query.email})
+          .toArray((err, items) => {
+            res.send(items)
+          })
+        })
+    }
+    handleGet('/cartProducts', cartCollection)
 
 })
 

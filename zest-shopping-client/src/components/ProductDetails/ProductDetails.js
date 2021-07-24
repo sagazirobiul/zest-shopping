@@ -1,13 +1,17 @@
-import React,{ useEffect, useState } from 'react';
+import React,{ useEffect, useState,useContext } from 'react';
 import axios from 'axios';
-import { Col, Container, Row, Button } from 'react-bootstrap';
+import { Col, Container, Row, Button, Spinner } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import './ProductDetails.css'
+import toast from 'react-hot-toast';
+import { UserContext } from '../../App';
 
 const ProductDetails = () => {
+    const { user: {email}} = useContext(UserContext)
     const {id} = useParams();
     const [product, setProduct] = useState({});
     const [quantity, setQuantity] = useState(1)
+    const [isAdding, setIsAdding] = useState(false)
 
     const {title, image, description, category, price} = product || {};
 
@@ -27,6 +31,7 @@ const ProductDetails = () => {
     }
 
     const handleAddCart = () => {
+        setIsAdding(true)
         const cartData = {
             title: title,
             image: image,
@@ -34,7 +39,16 @@ const ProductDetails = () => {
             category: category,
             quantity: quantity,
             price: price * quantity,
+            email: email
         }
+
+        axios.post('http://localhost:8080/addCart', cartData)
+        .then(res => {
+            if(res){
+                setIsAdding(false)
+                toast.success('Product successfully added to cart')
+            }
+        })
     }
 
     return (
@@ -58,7 +72,20 @@ const ProductDetails = () => {
                         <h2>{title}</h2>
                         <h5 className="my-3">Category: <span className="text-primary">{category}</span></h5>
                         <p>{description}</p>
-                        <Button onClick={handleAddCart}>Add to cart</Button>
+                        {
+                            isAdding ?
+                            <Button variant="primary" disabled>
+                                <Spinner
+                                as="span"
+                                animation="grow"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                                />
+                                Adding...
+                            </Button>:
+                            <Button onClick={handleAddCart}>Add to cart</Button>
+                        }
                     </Col>
                 </Row>
             </Container>
