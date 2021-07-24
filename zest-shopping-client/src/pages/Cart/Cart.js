@@ -1,19 +1,38 @@
 import axios from 'axios';
-import React, {useState, useContext} from 'react';
+import React, {useEffect, useContext, useState} from 'react';
 import { Col, Container, Row, Alert, Button } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import './Cart.css'
 
 const Cart = () => {
     const {user: {email}, cartProducts, setCartProducts} = useContext(UserContext)
+    const [isUpdate, setIsUpdated] = useState(true)
 
-    useState(() => {
+    useEffect(() => {
         axios.get(`http://localhost:8080/cartProducts?email=${email}`)
         .then(res => setCartProducts(res.data))
-    }, [email])
+    }, [email, setCartProducts, isUpdate])
 
     const totalPrice = cartProducts.reduce((acc, {price}) => acc + price, 0)
+
+    const handleCartRemove = id => {
+        setIsUpdated(false)
+        const loading = toast.loading('removing...Please wait!')
+
+        axios.delete(`http://localhost:8080/removeCart/${id}`)
+            .then(res => {
+                toast.dismiss(loading)
+                if(res){
+                    setIsUpdated(true);
+                    toast.success('Remove to cart successful!');
+                }
+                else{
+                    toast.error('Something went wrong, please try again');
+                }
+            })
+    }
 
     return (
         <section>
@@ -38,7 +57,7 @@ const Cart = () => {
                                                 <span className="d-block">Category: <span className="text-primary">{category}</span></span>
                                                 <span className="d-block">Quantity: <span className="text-primary">{quantity}</span></span>
                                                 <span>Price: <span className="text-primary">$</span>{price}</span>
-                                                <Button className="d-block" variant="outline-danger" size="sm">Remove to cart</Button>
+                                                <Button onClick={() => handleCartRemove(_id)} className="d-block" variant="outline-danger" size="sm">Remove to cart</Button>
                                             </div>
                                         </div>
                                     )

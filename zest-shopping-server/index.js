@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 const port =  process.env.PORT || 8080;
 
 app.use(express.json())
@@ -33,6 +34,14 @@ client.connect(err => {
         })
     }
     handleGet('/cartProducts', cartCollection)
+    handleGet('/orders', ordersCollection)
+
+    app.delete('/removeCart/:id', (req, res) => {
+        cartCollection.deleteOne({_id: ObjectId(req.params.id)})
+        .then(result => {
+            res.send( result.deletedCount > 0)
+        })
+    })
 
 })
 
